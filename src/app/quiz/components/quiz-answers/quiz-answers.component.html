@@ -1,0 +1,30 @@
+<h1>Results</h1>
+<div *ngIf="quizService.questions">
+  <div *ngFor="let question of quizService.questions">
+    <div [innerHTML]="question.question"></div>
+    <button
+      *ngFor="let answer of question.answers; let i = index"
+      class="answer"
+      [ngClass]="{
+        red:
+          answer === question.selected_answer &&
+          answer !== question.correct_answer,
+        green: answer === question.correct_answer
+      }"
+      disabled
+      [innerHTML]="answer"
+    ></button>
+  </div>
+  <div
+    class="score"
+    [ngClass]="{
+      green: score > 3,
+      yellow: score > 1 && score <= 3,
+      red: score <= 1
+    }"
+  >
+    You scored {{ score }} out of {{ quizService.questions.length }}
+  </div>
+</div>
+<div *ngIf="!quizService.questions">There are no results</div>
+<button (click)="goToQuizCreation()">Create a new quiz</button>

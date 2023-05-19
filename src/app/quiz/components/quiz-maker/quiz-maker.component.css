@@ -1,0 +1,24 @@
+select,
+#createBtn,
+.submit {
+  height: 32px;
+  cursor: pointer;
+}
+
+button.answer {
+  cursor: pointer;
+  margin: 10px;
+  background-color: white;
+  min-width: 100px;
+  height: 40px;
+  box-shadow: none;
+  border: 1px solid green;
+  color: green;
+  border-radius: 4px;
+}
+
+button.answer:hover,
+button.selected {
+  background-color: green;
+  color: white;
+}

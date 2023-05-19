@@ -1,0 +1,46 @@
+<h1>Quiz Maker</h1>
+<div *ngIf="!quizService.isLoading">
+  <div>
+    <select id="categorySelect" [(ngModel)]="quizService.selectedCategoryId">
+      <option
+        *ngFor="let category of quizService.categories"
+        [value]="category.id"
+      >
+        {{ category.name }}
+      </option>
+    </select>
+    <select id="difficultySelect" [(ngModel)]="quizService.selectedDifficulty">
+      <option
+        *ngFor="let difficulty of quizService.difficulties"
+        [value]="difficulty"
+      >
+        {{ difficulty }}
+      </option>
+    </select>
+    <button id="createBtn" (click)="quizService.loadQuiz()">Create</button>
+  </div>
+  <div *ngIf="quizService.questions">
+    <div *ngFor="let question of quizService.questions">
+      <div [innerHTML]="question.question"></div>
+      <button
+        *ngFor="let answer of question.answers; let i = index"
+        class="answer"
+        [ngClass]="{ selected: answer === question.selected_answer }"
+        (click)="setAnswer(question, answer)"
+        [innerHTML]="answer"
+      ></button>
+    </div>
+    <button
+      class="submit"
+      *ngIf="
+        quizService.questions &&
+        quizService.questions.length > 0 &&
+        quizService.questions.length === getSelectedAnswerCount()
+      "
+      (click)="goToAnswerPage()"
+    >
+      submit
+    </button>
+  </div>
+</div>
+<div *ngIf="quizService.isLoading">Loading ...</div>
