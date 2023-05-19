@@ -36,7 +36,7 @@ export class QuizAnswersComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  public sanizizeHTML(content: string): SafeHtml {
+  public sanitizeHTML(content: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 }
