@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Question } from '../../models/question.model';
 import { QuizService } from '../../services/quiz.service';
@@ -9,7 +10,11 @@ import { QuizService } from '../../services/quiz.service';
   styleUrls: ['./quiz-maker.component.css'],
 })
 export class QuizMakerComponent implements OnInit {
-  constructor(public quizService: QuizService, private router: Router) {}
+  constructor(
+    public quizService: QuizService,
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
     this.quizService.questions = [];
@@ -36,5 +41,9 @@ export class QuizMakerComponent implements OnInit {
     });
 
     return selectedAnswerCount;
+  }
+
+  public sanitizeHTML(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 }

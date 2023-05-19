@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Question } from '../../models/question.model';
 import { QuizService } from '../../services/quiz.service';
@@ -11,7 +12,11 @@ import { QuizService } from '../../services/quiz.service';
 export class QuizAnswersComponent implements OnInit {
   public score: number = 0;
 
-  constructor(public quizService: QuizService, private router: Router) {}
+  constructor(
+    public quizService: QuizService,
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
     this.calculateScore();
@@ -29,5 +34,9 @@ export class QuizAnswersComponent implements OnInit {
   // redirect to Quiz Maker page
   public goToQuizCreation(): void {
     this.router.navigate(['/']);
+  }
+
+  public sanizizeHTML(content: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 }

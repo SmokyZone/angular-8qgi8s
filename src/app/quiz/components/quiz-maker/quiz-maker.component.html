@@ -21,13 +21,13 @@
   </div>
   <div *ngIf="quizService.questions">
     <div *ngFor="let question of quizService.questions">
-      <div [innerHTML]="question.question"></div>
+      <div [innerHTML]="sanitizeHTML(question.question)"></div>
       <button
         *ngFor="let answer of question.answers; let i = index"
         class="answer"
         [ngClass]="{ selected: answer === question.selected_answer }"
         (click)="setAnswer(question, answer)"
-        [innerHTML]="answer"
+        [innerHTML]="sanitizeHTML(answer)"
       ></button>
     </div>
     <button
